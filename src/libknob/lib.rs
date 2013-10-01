@@ -140,7 +140,7 @@
 //! fn main() {
 //!   let settings = Settings::new();
 //!   settings.set(Ip, "::0.0.0.1");
-//!   let socket: IpAddr = settings.fetch(Ip);
+//!   let socket: IpAddr = settings.ip();
 //!   assert_eq!(socket.to_str(), ~"::0.0.0.1")
 //! }
 //! ~~~
