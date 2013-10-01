@@ -34,7 +34,7 @@ fn main() {
 }
 ```
 
-For more elaborate examples, see `src/libknob/lib.rs`.
+For more elaborate examples, see `http://skade.github.io/knob/doc/knob/index.html`.
 
 ## License
 
