@@ -1,5 +1,5 @@
 #[link(name = "knob",
-       vers = "0.5",
+       vers = "1.0",
        uuid = "3299B6C2-99DE-44FD-8867-8EE7304959D7",
        url = "http://github.com/skade/knob")];
 
