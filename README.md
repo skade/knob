@@ -9,6 +9,8 @@ It also handles argument lists.
 ## Usage
 
 ```rust
+use knob::Settings;
+
 fn main() {
   let settings = Settings::new();
   settings.set("ip", "::0.0.0.1");
@@ -19,6 +21,7 @@ fn main() {
 
 ```rust
 use extra::getopts::groups::*;
+use knob::Settings;
 
 fn main() {
   let settings = Settings::new();
