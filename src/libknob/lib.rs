@@ -234,8 +234,6 @@ impl Settings {
       Err(fail) => { return Some(fail) }
     };
 
-    debug!(matches);
-
     let given_options = self.options.clone();
     for opt in given_options.iter() {
       let opt_strings = &[opt.short_name.clone(), opt.long_name.clone()];
