@@ -425,12 +425,21 @@
 <span id='390'>390</span>
 <span id='391'>391</span>
 <span id='392'>392</span>
+<span id='393'>393</span>
+<span id='394'>394</span>
+<span id='395'>395</span>
+<span id='396'>396</span>
+<span id='397'>397</span>
+<span id='398'>398</span>
+<span id='399'>399</span>
 </pre><pre class='rust'>#[link(name = &quot;knob&quot;,
-       vers = &quot;0.5&quot;,
+       vers = &quot;1.0&quot;,
        uuid = &quot;3299B6C2-99DE-44FD-8867-8EE7304959D7&quot;,
        url = &quot;http://github.com/skade/knob&quot;)];
 
 #[crate_type = &quot;lib&quot;];
+#[comment = &quot;A convenient Rust settings system&quot;];
+#[license = &quot;MIT&quot;];
 
 //! A convenient structure to store and load settings.
 //!
@@ -565,7 +574,7 @@
 //! fn main() {
 //!   let settings = Settings::new();
 //!   settings.set(Ip, &quot;::0.0.0.1&quot;);
-//!   let socket: IpAddr = settings.fetch(Ip);
+//!   let socket: IpAddr = settings.ip();
 //!   assert_eq!(socket.to_str(), ~&quot;::0.0.0.1&quot;)
 //! }
 //! ~~~
@@ -658,8 +667,6 @@ impl Settings {
       Ok(m) =&gt; { m }
       Err(fail) =&gt; { return Some(fail) }
     };
-
-    debug!(matches);
 
     let given_options = self.options.clone();
     for opt in given_options.iter() {
@@ -815,6 +822,13 @@ mod tests {
 
     assert!(usage.contains(&quot;this is how it works&quot;))
     assert!(usage.contains(&quot;--port&quot;))
+  }
+
+  #[test]
+  fn test_goes_up_to_eleven() {
+    let mut settings = Settings::new();
+    settings.set(&quot;knob&quot;, 11);
+    assert_eq!(settings.fetch(&quot;knob&quot;), Some(11));
   }
 }</pre></section>
     <section id='search' class="content hidden"></section>

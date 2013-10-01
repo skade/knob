@@ -34,11 +34,12 @@
     </nav>
 
     <section id='main' class="content struct"><a class='source'
-                       href='../src/knob/src/libknob/lib.rs.html#158'>[src]</a><h1 class='fqn'>Struct <a href='index.html'>knob</a>::<a class='struct' href=''>Settings</a></h1><pre class='struct'>pub struct Settings {
-    priv <a name='structfield.store'>store</a>: HashMap&lt;~str, ~str&gt;,
-    priv <a name='structfield.options'>options</a>: ~[OptGroup],
+                       href='../src/knob/src/libknob/lib.rs.html#160'>[src]</a><h1 class='fqn'>Struct <a href='index.html'>knob</a>::<a class='struct' href=''>Settings</a></h1><pre class='struct'>pub struct Settings {
+    priv store: HashMap&lt;~str, ~str&gt;,
+    priv options: ~[OptGroup],
 }</pre><div class='docblock'><p>The settings structure we save the options and settings in.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='struct.Settings.html' title='knob::Settings'>Settings</a></code></h3><div class='methods'><h4 id='method.new' class='method'><code>fn <span class='fnname'>new</span>() -&gt; <a class='struct' href='struct.Settings.html' title='knob::Settings'>Settings</a></code></h4>
+</div><h2 class='fields'>Fields</h2>
+<table><tr><td id='structfield.store'><code>store</code></td><td></td></tr><tr><td id='structfield.options'><code>options</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='struct.Settings.html' title='knob::Settings'>Settings</a></code></h3><div class='methods'><h4 id='method.new' class='method'><code>fn <span class='fnname'>new</span>() -&gt; <a class='struct' href='struct.Settings.html' title='knob::Settings'>Settings</a></code></h4>
 <div class='docblock'><p>Create a new Settings struct.</p>
 </div><h4 id='method.set' class='method'><code>fn <span class='fnname'>set</span>&lt;A: ToStr, T: ToStr&gt;(&amp;mut self, setting: A, value: T)</code></h4>
 <div class='docblock'><p>Set a settings key to a value. The value will be serialized.</p>
@@ -69,7 +70,8 @@ will be returned.</p>
 </div><h4 id='method.usage' class='method'><code>fn <span class='fnname'>usage</span>(&amp;self, brief: &amp;str) -&gt; ~str</code></h4>
 <div class='docblock'><p>Returns the usage string for the stored OptGroups. Pass <code>brief</code>
 to have it included.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl Clone for <a class='struct' href='struct.Settings.html' title='knob::Settings'>Settings</a></code></h3><div class='methods'><h4 id='method.clone' class='method'><code>fn <span class='fnname'>clone</span>(&amp;self) -&gt; <a class='struct' href='struct.Settings.html' title='knob::Settings'>Settings</a></code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl Clone for <a class='struct' href='struct.Settings.html' title='knob::Settings'>Settings</a></code></h3><div class='docblock'><p>Automatically derived.</p>
+</div><div class='methods'><h4 id='method.clone' class='method'><code>fn <span class='fnname'>clone</span>(&amp;self) -&gt; <a class='struct' href='struct.Settings.html' title='knob::Settings'>Settings</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 

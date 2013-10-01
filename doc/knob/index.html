@@ -162,7 +162,7 @@ enum Keys {
 fn main() {
   let settings = Settings::new();
   settings.set(Ip, &quot;::0.0.0.1&quot;);
-  let socket: IpAddr = settings.fetch(Ip);
+  let socket: IpAddr = settings.ip();
   assert_eq!(socket.to_str(), ~&quot;::0.0.0.1&quot;)
 }
 </code></pre>
