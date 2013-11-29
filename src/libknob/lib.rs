@@ -253,8 +253,8 @@ impl Settings {
 #[cfg(test)]
 mod tests {
   use super::Settings;
-  use std::rt::io::net::ip::{SocketAddr, IpAddr, Ipv4Addr};
-  use extra::getopts::groups::optopt;
+  use std::io::net::ip::{SocketAddr, IpAddr, Ipv4Addr};
+  use extra::getopts::groups::{optopt,reqopt};
 
   #[deriving(ToStr)]
   enum Keys {
@@ -271,7 +271,7 @@ mod tests {
 
   impl SocketSettings for Settings {
     fn socket(&self) -> SocketAddr {
-      do self.fetch_with(Addr) |addr| {
+      self.fetch_with(Addr, |addr| {
         match addr {
           Some(socket_addr) => { socket_addr },
           None => {
@@ -280,7 +280,7 @@ mod tests {
             SocketAddr { ip: ip, port: port }
           }
         }
-      }
+      })
     }
 
     fn port(&self) -> u16 {
