@@ -1,5 +1,6 @@
 #[link(name = "knob",
-       vers = "1.0",
+       vers = "1.0.1",
+       package_id = "knob",
        uuid = "3299B6C2-99DE-44FD-8867-8EE7304959D7",
        url = "http://github.com/skade/knob")];
 
@@ -149,7 +150,7 @@
 
 extern mod extra;
 
-use std::hashmap::*;
+use std::hashmap::HashMap;
 use std::os;
 
 use extra::getopts::groups::{OptGroup,getopts,usage};
@@ -199,7 +200,7 @@ impl Settings {
 
   /// Fetch a setting for a key and pass it to given function. The result of the function
   /// will be returned.
-  pub fn fetch_with<A: ToStr, T: FromStr>(&self, setting: A, f: &fn(Option<T>) -> T) -> T {
+  pub fn fetch_with<A: ToStr, T: FromStr>(&self, setting: A, f: |Option<T>| -> T) -> T {
     let value = self.fetch(setting.to_str());
     f(value)
   }
@@ -251,9 +252,9 @@ impl Settings {
 
 #[cfg(test)]
 mod tests {
-  use super::*;
+  use super::Settings;
   use std::rt::io::net::ip::{SocketAddr, IpAddr, Ipv4Addr};
-  use extra::getopts::groups::*;
+  use extra::getopts::groups::optopt;
 
   #[deriving(ToStr)]
   enum Keys {
