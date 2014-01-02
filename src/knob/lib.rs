@@ -139,7 +139,7 @@
 //!
 //! knob goes up to 11.
 
-#[crate_id = "knob/1.0.1"];
+#[crate_id = "github.com/skade/knob#knob:1.0.1"];
 
 #[crate_type = "lib"];
 #[comment = "A convenient Rust settings system"];
