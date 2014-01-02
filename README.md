@@ -34,7 +34,7 @@ fn main() {
 }
 ```
 
-For more elaborate examples, see `http://skade.github.io/knob/doc/knob/index.html`.
+For more elaborate examples, see [the API documentation](http://skade.github.io/knob/doc/knob/index.html).
 
 ## License
 
