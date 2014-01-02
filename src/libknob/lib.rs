@@ -1,13 +1,4 @@
-#[link(name = "knob",
-       vers = "1.0.1",
-       package_id = "knob",
-       uuid = "3299B6C2-99DE-44FD-8867-8EE7304959D7",
-       url = "http://github.com/skade/knob")];
-
-#[crate_type = "lib"];
-#[comment = "A convenient Rust settings system"];
-#[license = "MIT"];
-
+//!
 //! A convenient structure to store and load settings.
 //!
 //! It is meant for items that are rarely read and stored, like command line flags or
@@ -147,6 +138,12 @@
 //! ~~~
 //!
 //! knob goes up to 11.
+
+#[crate_id = "knob/1.0.1"];
+
+#[crate_type = "lib"];
+#[comment = "A convenient Rust settings system"];
+#[license = "MIT"];
 
 extern mod extra;
 
