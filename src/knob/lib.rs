@@ -20,7 +20,7 @@
 //! The following example shows you how to store an ip in knob:
 //!
 //! ~~~{.rust}
-//! extern mod knob;
+//! extern crate knob;
 //! use knob::*;
 //! use std::rt::io::net::ip::IpAddr;
 //!
@@ -145,13 +145,14 @@
 #[comment = "A convenient Rust settings system"];
 #[license = "MIT"];
 
-extern mod extra;
+extern crate extra;
+extern crate getopts;
 
 use std::hashmap::HashMap;
 use std::os;
 
-use extra::getopts::groups::{OptGroup,getopts,usage};
-use extra::getopts::Fail_;
+use getopts::{usage,getopts,OptGroup};
+use getopts::Fail_;
 
 /// The settings structure we save the options and settings in.
 #[deriving(Clone)]
