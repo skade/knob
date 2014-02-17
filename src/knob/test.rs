@@ -1,11 +1,12 @@
-extern mod knob;
-extern mod extra;
+extern crate knob;
+extern crate extra;
+extern crate getopts;
 
 #[cfg(test)]
 mod tests {
   use knob::Settings;
   use std::io::net::ip::{SocketAddr, IpAddr, Ipv4Addr};
-  use extra::getopts::groups::{optopt,reqopt};
+  use getopts::{optopt,reqopt,usage};
 
   #[deriving(ToStr)]
   enum Keys {
