@@ -1,5 +1,4 @@
 extern crate knob;
-extern crate extra;
 extern crate getopts;
 
 #[cfg(test)]
@@ -8,7 +7,7 @@ mod tests {
   use std::io::net::ip::{SocketAddr, IpAddr, Ipv4Addr};
   use getopts::{optopt,reqopt,usage};
 
-  #[deriving(ToStr)]
+  #[deriving(Show)]
   enum Keys {
     Ip,
     Port,

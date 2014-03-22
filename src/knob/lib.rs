@@ -144,11 +144,13 @@
 #[comment = "A convenient Rust settings system"];
 #[license = "MIT"];
 
-extern crate extra;
 extern crate getopts;
+extern crate collections;
 
-use std::hashmap::HashMap;
+use collections::hashmap::HashMap;
 use std::os;
+use std::from_str::FromStr;
+use std::to_str::ToStr;
 
 use getopts::{usage,getopts,OptGroup};
 use getopts::Fail_;
