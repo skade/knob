@@ -139,10 +139,10 @@
 //!
 //! knob goes up to 11.
 
-#[crate_id = "knob#1.0.1"];
-#[crate_type = "lib"];
-#[comment = "A convenient Rust settings system"];
-#[license = "MIT"];
+#![crate_id = "knob#1.0.1"]
+#![crate_type = "lib"]
+#![comment = "A convenient Rust settings system"]
+#![license = "MIT"]
 
 extern crate getopts;
 extern crate collections;
