@@ -158,8 +158,8 @@ use getopts::Fail_;
 /// The settings structure we save the options and settings in.
 #[deriving(Clone)]
 pub struct Settings {
-  priv store: HashMap<~str,~str>,
-  priv options: ~[OptGroup],
+  store: HashMap<~str,~str>,
+  options: ~[OptGroup],
 }
 
 impl Settings {
