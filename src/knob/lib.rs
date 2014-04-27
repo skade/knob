@@ -159,13 +159,13 @@ use getopts::Fail_;
 #[deriving(Clone)]
 pub struct Settings {
   store: HashMap<~str,~str>,
-  options: ~[OptGroup],
+  options: ~Vec<OptGroup>,
 }
 
 impl Settings {
   /// Create a new Settings struct.
   pub fn new() -> Settings {
-    Settings { store: HashMap::new(), options: ~[] }
+    Settings { store: HashMap::new(), options: ~Vec::new() }
   }
 
   /// Set a settings key to a value. The value will be serialized.
@@ -229,7 +229,7 @@ impl Settings {
 
     self.set("knob.progname", prog_name.clone());
 
-    let matches = match getopts(args.tail(), self.options) {
+    let matches = match getopts(args.tail(), self.options.as_slice()) {
       Ok(m) => { m }
       Err(fail) => { return Some(fail) }
     };
@@ -245,7 +245,7 @@ impl Settings {
   /// Returns the usage string for the stored OptGroups. Pass `brief`
   /// to have it included.
   pub fn usage(&self, brief: &str) -> ~str {
-    usage(brief, self.options)
+    usage(brief, self.options.as_slice())
   }
 }
 
