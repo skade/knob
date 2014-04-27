@@ -4,6 +4,4 @@ before_install:
 install:
   - sudo apt-get install rust-nightly
 script:
-  - rustpkg build knob
-  - rustc --test src/knob/lib.rs
-  - src/knob/knob
+  - "make test"
