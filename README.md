@@ -9,27 +9,33 @@ It also handles argument lists.
 ## Usage
 
 ```rust
+extern crate knob;
+
+use std::io::net::ip::IpAddr;
 use knob::Settings;
 
 fn main() {
-  let settings = Settings::new();
+  let mut settings = Settings::new();
   settings.set("ip", "::0.0.0.1");
-  let socket: IpAddr = settings.fetch("ip");
-  assert_eq!(socket.to_str(), ~"::0.0.0.1")
+  let socket: IpAddr = settings.fetch("ip").unwrap();
+  assert_eq!(socket.to_str(), ~"::0.0.0.1");
 }
 ```
 
 ```rust
-use extra::getopts::groups::*;
+extern crate getopts;
+extern crate knob;
+
+use getopts::optopt;
 use knob::Settings;
 
 fn main() {
-  let settings = Settings::new();
-  settings.opt(optopt("p", "port", "the port to bind to", "4000"))
-  settings.opt(reqopt("e", "environment", "the environment to run in", ""));;
+  let mut settings = Settings::new();
+  settings.opt(optopt("p", "port", "the port to bind to", "4000"));
+  settings.opt(optopt("e", "environment", "the environment to run in", ""));
   let errors = settings.load_os_args();
   if errors.is_some() {
-    println(settings.usage("Try one of these:"))
+    println!("{}", settings.usage("Try one of these:"));
   }
 }
 ```

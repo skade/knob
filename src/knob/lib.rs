@@ -4,50 +4,62 @@
 //! It is meant for items that are rarely read and stored, like command line flags or
 //! application configuration.
 //!
-//! knob::Settings expects all values to implement ToStr + FromStr and stores them as
+//! `knob::Settings` expects all values to implement `Show` + `FromStr` and stores them as
 //! strings internally. This allows sideloading of settings through multiple means, e.g.
 //! the command line or a simple config file. knob is not meant for structured data. If
 //! you want to load such data, store the location of the data as a Knob setting and do
 //! the loading parsing yourself.
 //!
-//! knob is typesafe in a sense that it will return you the type you wanted back if possible and
+//! `knob` is typesafe in a sense that it will return you the type you wanted back if possible and
 //! fails otherwise.
 //!
-//! knob allows you to decorate the Settings structure yourself for convenience (see examples).
+//! `knob` allows you to decorate the `Settings` structure yourself for convenience (see examples).
 //!
 //! # Storing and fetching values
 //!
-//! The following example shows you how to store an ip in knob:
+//! The following example shows you how to store an IP address in `knob`:
 //!
 //! ~~~{.rust}
 //! extern crate knob;
-//! use knob::*;
-//! use std::rt::io::net::ip::IpAddr;
+//!
+//! use std::io::net::ip::IpAddr;
+//! use knob::Settings;
 //!
 //! fn main() {
-//!   let settings = Settings::new();
-//!   settings.set("ip", "0.0.0.0:4567");
-//!   let socket: IpAddr = settings.socket();
-//!   assert_eq!(socket.to_str(), ~"0.0.0.0:4567")
+//!   let mut settings = Settings::new();
+//!   settings.set("ip", "0.0.0.0");
+//!   let socket: IpAddr = settings.fetch("ip").unwrap();
+//!   assert_eq!(socket.to_str(), ~"0.0.0.0");
 //! }
 //! ~~~
 //!
 //! This works the same for IPv6 addresses:
 //!
 //! ~~~{.rust}
+//! extern crate knob;
+//!
+//! use knob::Settings;
+//! use std::io::net::ip::IpAddr;
+//!
 //! fn main() {
-//!   let settings = Settings::new();
+//!   let mut settings = Settings::new();
 //!   settings.set("ip", "::0.0.0.1");
-//!   let socket: IpAddr = settings.fetch("ip");
-//!   assert_eq!(socket.to_str(), ~"::0.0.0.1")
+//!   let socket: IpAddr = settings.fetch("ip").unwrap();
+//!   assert_eq!(socket.to_str(), ~"::0.0.0.1");
 //! }
 //! ~~~
 //!
 //! # Providing your own keys
 //!
-//! You can use enums as keys, as long as they implement ToStr:
+//! You can use enums as keys, as long as they implement `Show`:
 //!
 //! ~~~{.rust}
+//! extern crate knob;
+//!
+//! use knob::Settings;
+//! use std::io::net::ip::IpAddr;
+//!
+//! #[deriving(Show)]
 //! enum Keys {
 //!   Port,
 //!   Ip,
@@ -55,31 +67,35 @@
 //! }
 //!
 //! fn main() {
-//!   let settings = Settings::new();
+//!   let mut settings = Settings::new();
 //!   settings.set(Ip, "::0.0.0.1");
-//!   let socket: IpAddr = settings.fetch(Ip);
-//!   assert_eq!(socket.to_str(), ~"::0.0.0.1")
+//!   let socket: IpAddr = settings.fetch(Ip).unwrap();
+//!   assert_eq!(socket.to_str(), ~"::0.0.0.1");
 //! }
 //! ~~~
 //!
 //! # Registering command line options
 //!
-//! Knob allows you to register command line options to read from the command line later.
+//! `knob` allows you to register command line options to read from the command line later.
 //!
-//! The options are getopts option groups.
+//! The options are `getopts` option groups.
 //!
 //! If the loading of the command line args fails, an error will be returned.
 //!
 //! ~~~{.rust}
-//! use extra::getopts::groups::*;
+//! extern crate getopts;
+//! extern crate knob;
+//!
+//! use getopts::optopt;
+//! use knob::Settings;
 //!
 //! fn main() {
-//!   let settings = Settings::new();
-//!   settings.opt(optopt("p", "port", "the port to bind to", "4000"))
-//!   settings.opt(reqopt("e", "environment", "the environment to run in", ""));;
+//!   let mut settings = Settings::new();
+//!   settings.opt(optopt("p", "port", "the port to bind to", "4000"));
+//!   settings.opt(optopt("e", "environment", "the environment to run in", ""));
 //!   let errors = settings.load_os_args();
 //!   if errors.is_some() {
-//!     println(settings.usage("Try one of these:"))
+//!     println!("{}", settings.usage("Try one of these:"));
 //!   }
 //! }
 //! ~~~
@@ -90,6 +106,12 @@
 //! to implement your own loading behaviour.
 //!
 //! ~~~{.rust}
+//! extern crate knob;
+//!
+//! use knob::Settings;
+//! use std::io::net::ip::{IpAddr,Ipv4Addr,SocketAddr};
+//!
+//! #[deriving(Show)]
 //! enum Keys {
 //!   Port,
 //!   Ip,
@@ -104,7 +126,7 @@
 //!
 //! impl SocketSettings for Settings {
 //!   fn socket(&self) -> SocketAddr {
-//!     do self.fetch_with(Addr) |addr| {
+//!     self.fetch_with(Addr, |addr| {
 //!       match addr {
 //!         Some(socket_addr) => { socket_addr },
 //!         None => {
@@ -113,7 +135,7 @@
 //!           SocketAddr { ip: ip, port: port }
 //!         }
 //!       }
-//!     }
+//!     })
 //!   }
 //!
 //!   fn port(&self) -> u16 {
@@ -124,16 +146,12 @@
 //!     self.fetch(Ip).unwrap_or(Ipv4Addr(127,0,0,1))
 //!   }
 //! }
-//! enum Keys {
-//!   Port,
-//!   Ip,
-//! }
 //!
 //! fn main() {
-//!   let settings = Settings::new();
+//!   let mut settings = Settings::new();
 //!   settings.set(Ip, "::0.0.0.1");
 //!   let socket: IpAddr = settings.ip();
-//!   assert_eq!(socket.to_str(), ~"::0.0.0.1")
+//!   assert_eq!(socket.to_str(), ~"::0.0.0.1");
 //! }
 //! ~~~
 //!
