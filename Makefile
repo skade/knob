@@ -34,6 +34,6 @@ checkdocs: libknob
 	$(RUSTDOC) --test -L build README.md
 	$(RUSTDOC) --test -L build src/knob/lib.rs
 
-docs: checkdoc
+docs: checkdocs
 	## Generate API documentation
 	$(RUSTDOC) -o doc/ src/knob/lib.rs
