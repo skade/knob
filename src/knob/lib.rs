@@ -8,9 +8,9 @@
 //! strings internally. This allows sideloading of settings through multiple means, e.g.
 //! the command line or a simple config file. knob is not meant for structured data. If
 //! you want to load such data, store the location of the data as a Knob setting and do
-//! the loading parsing yourself.
+//! the loading yourself.
 //!
-//! `knob` is typesafe in a sense that it will return you the type you wanted back if possible and
+//! `knob` is typesafe in a sense that it will return the expected type you wanted if possible and
 //! fails otherwise.
 //!
 //! `knob` allows you to decorate the `Settings` structure yourself for convenience (see examples).
