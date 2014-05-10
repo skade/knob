@@ -29,7 +29,7 @@
 //!   let mut settings = Settings::new();
 //!   settings.set("ip", "0.0.0.0");
 //!   let socket: IpAddr = settings.fetch("ip").unwrap();
-//!   assert_eq!(socket.to_str(), ~"0.0.0.0");
+//!   assert_eq!(socket.to_str(), "0.0.0.0".to_owned());
 //! }
 //! ~~~
 //!
@@ -45,7 +45,7 @@
 //!   let mut settings = Settings::new();
 //!   settings.set("ip", "::0.0.0.1");
 //!   let socket: IpAddr = settings.fetch("ip").unwrap();
-//!   assert_eq!(socket.to_str(), ~"::0.0.0.1");
+//!   assert_eq!(socket.to_str(), "::0.0.0.1".to_owned());
 //! }
 //! ~~~
 //!
@@ -70,7 +70,7 @@
 //!   let mut settings = Settings::new();
 //!   settings.set(Ip, "::0.0.0.1");
 //!   let socket: IpAddr = settings.fetch(Ip).unwrap();
-//!   assert_eq!(socket.to_str(), ~"::0.0.0.1");
+//!   assert_eq!(socket.to_str(), "::0.0.0.1".to_owned());
 //! }
 //! ~~~
 //!
@@ -151,7 +151,7 @@
 //!   let mut settings = Settings::new();
 //!   settings.set(Ip, "::0.0.0.1");
 //!   let socket: IpAddr = settings.ip();
-//!   assert_eq!(socket.to_str(), ~"::0.0.0.1");
+//!   assert_eq!(socket.to_str(), "::0.0.0.1".to_owned());
 //! }
 //! ~~~
 //!
@@ -177,13 +177,13 @@ use getopts::Fail_;
 #[deriving(Clone)]
 pub struct Settings {
   store: HashMap<~str,~str>,
-  options: ~Vec<OptGroup>,
+  options: Box<Vec<OptGroup>>,
 }
 
 impl Settings {
   /// Create a new Settings struct.
   pub fn new() -> Settings {
-    Settings { store: HashMap::new(), options: ~Vec::new() }
+    Settings { store: HashMap::new(), options: box Vec::new() }
   }
 
   /// Set a settings key to a value. The value will be serialized.
@@ -242,8 +242,8 @@ impl Settings {
   /// Automatically sets "knob.progname" to the name of the program.
   ///
   /// Optionally returns failures.
-  pub fn load_args(&mut self, args: ~[~str]) -> Option<Fail_> {
-    let ref prog_name = args[0];
+  pub fn load_args(&mut self, args: Vec<~str>) -> Option<Fail_> {
+    let ref prog_name = args.get(0);
 
     self.set("knob.progname", prog_name.clone());
 
