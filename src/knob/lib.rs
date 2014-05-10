@@ -215,14 +215,14 @@ impl Settings {
     }
   }
 
-  /// Fetch a setting for a key and pass it to given function. The result of the function
+  /// Fetch a setting for a key and pass it to the given function. The result of the function
   /// will be returned.
   pub fn fetch_with<A: ToStr, T: FromStr>(&self, setting: A, f: |Option<T>| -> T) -> T {
     let value = self.fetch(setting.to_str());
     f(value)
   }
 
-  /// Register a commandline for laster use with load_args.
+  /// Register a commandline for later use with load_args.
   ///
   /// Currently, only optopt and reqopt are properly supported.
   pub fn opt(&mut self, opt: OptGroup) {
@@ -261,7 +261,7 @@ impl Settings {
   }
 
   /// Returns the usage string for the stored OptGroups. Pass `brief`
-  /// to have it included.
+  /// to have a brief message included before the usage strings.
   pub fn usage(&self, brief: &str) -> ~str {
     usage(brief, self.options.as_slice())
   }
