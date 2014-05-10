@@ -51,6 +51,13 @@ Changes to maintain compatibility with the current development state of Rust are
 considered patches, as long as the resulting API stays faithful to the previous
 API and doesn't add or loose any features.
 
+## Contributors
+
+Original Author: [Florian Gilcher <florian.gilcher@asquera.de>](http://github.com/skade)
+With patches by:
+* [eliovir](http://github.com/eliovir)
+* [m-r-r](http://github.com/m-r-r)
+
 ## License
 
 MIT, see `LICENSE.md`
