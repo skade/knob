@@ -1,3 +1,5 @@
+% README
+
 # Knob
 
 [![Build Status](https://travis-ci.org/skade/knob.png)](https://travis-ci.org/skade/knob)

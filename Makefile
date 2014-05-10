@@ -37,3 +37,4 @@ checkdocs: libknob
 docs: checkdocs
 	## Generate API documentation
 	$(RUSTDOC) -o doc/ src/knob/lib.rs
+	$(RUSTDOC) -o doc/ README.md
