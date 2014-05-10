@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="generator" content="rustdoc">
+    <title>README</title>
+
+    
+    
+</head>
+<body>
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+    <h1 class="title">README</h1>
+    <nav id="TOC"><ul>
+<li><a href="#knob">1 Knob</a><ul>
+<li><a href="#usage">1.1 Usage</a><ul></ul></li>
+<li><a href="#version-policy">1.2 Version policy</a><ul></ul></li>
+<li><a href="#contributors">1.3 Contributors</a><ul></ul></li>
+<li><a href="#license">1.4 License</a><ul></ul></li></ul></li></ul></nav>
+<h1 id="knob" class='section-header'><a
+                           href="#knob">1 Knob</a></h1>
+<p><a href="https://travis-ci.org/skade/knob"><img src="https://travis-ci.org/skade/knob.png" alt="Build Status"></a></p>
+
+<p>Knob is a simple settings structure that is convenient to work with. It allows you to read and write to in a structured manner. It is intended for simple settings and data from the outside world.</p>
+
+<p>It also handles argument lists.</p>
+
+<h2 id="usage" class='section-header'><a
+                           href="#usage">1.1 Usage</a></h2><pre class='rust '>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>knob</span>;
+
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::<span class='ident'>IpAddr</span>;
+<span class='kw'>use</span> <span class='ident'>knob</span>::<span class='ident'>Settings</span>;
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+  <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>settings</span> <span class='op'>=</span> <span class='ident'>Settings</span>::<span class='ident'>new</span>();
+  <span class='ident'>settings</span>.<span class='ident'>set</span>(<span class='string'>&quot;ip&quot;</span>, <span class='string'>&quot;::0.0.0.1&quot;</span>);
+  <span class='kw'>let</span> <span class='ident'>socket</span>: <span class='ident'>IpAddr</span> <span class='op'>=</span> <span class='ident'>settings</span>.<span class='ident'>fetch</span>(<span class='string'>&quot;ip&quot;</span>).<span class='ident'>unwrap</span>();
+  <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>socket</span>.<span class='ident'>to_str</span>(), <span class='string'>&quot;::0.0.0.1&quot;</span>.<span class='ident'>to_owned</span>());
+}
+</pre>
+<pre class='rust '>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>getopts</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>knob</span>;
+
+<span class='kw'>use</span> <span class='ident'>getopts</span>::<span class='ident'>optopt</span>;
+<span class='kw'>use</span> <span class='ident'>knob</span>::<span class='ident'>Settings</span>;
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+  <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>settings</span> <span class='op'>=</span> <span class='ident'>Settings</span>::<span class='ident'>new</span>();
+  <span class='ident'>settings</span>.<span class='ident'>opt</span>(<span class='ident'>optopt</span>(<span class='string'>&quot;p&quot;</span>, <span class='string'>&quot;port&quot;</span>, <span class='string'>&quot;the port to bind to&quot;</span>, <span class='string'>&quot;4000&quot;</span>));
+  <span class='ident'>settings</span>.<span class='ident'>opt</span>(<span class='ident'>optopt</span>(<span class='string'>&quot;e&quot;</span>, <span class='string'>&quot;environment&quot;</span>, <span class='string'>&quot;the environment to run in&quot;</span>, <span class='string'>&quot;&quot;</span>));
+  <span class='kw'>let</span> <span class='ident'>errors</span> <span class='op'>=</span> <span class='ident'>settings</span>.<span class='ident'>load_os_args</span>();
+  <span class='kw'>if</span> <span class='ident'>errors</span>.<span class='ident'>is_some</span>() {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>settings</span>.<span class='ident'>usage</span>(<span class='string'>&quot;Try one of these:&quot;</span>));
+  }
+}
+</pre>
+
+<p>For more elaborate examples, see <a href="knob/index.html">the API documentation</a>.</p>
+
+<h2 id="version-policy" class='section-header'><a
+                           href="#version-policy">1.2 Version policy</a></h2>
+<p>This library follows <a href="http://semver.org">semver</a>, with a notable, but temporary
+exception, as Rust is currently still in flux:</p>
+
+<p>Changes to maintain compatibility with the current development state of Rust are
+considered patches, as long as the resulting API stays faithful to the previous
+API and doesn&#39;t add or loose any features.</p>
+
+<h2 id="contributors" class='section-header'><a
+                           href="#contributors">1.3 Contributors</a></h2>
+<p>Original Author: <a href="http://github.com/skade">Florian Gilcher <a href="mailto:florian.gilcher@asquera.de">florian.gilcher@asquera.de</a></a>
+With patches by:
+* <a href="http://github.com/eliovir">eliovir</a>
+* <a href="http://github.com/m-r-r">m-r-r</a></p>
+
+<h2 id="license" class='section-header'><a
+                           href="#license">1.4 License</a></h2>
+<p>MIT, see <code>LICENSE.md</code></p>
+
+    
+</body>
+</html>

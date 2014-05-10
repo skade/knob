@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The knob library documentation.">
+
+    <title>knob::Settings - Rust</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
+          rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+</head>
+<body>
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    <section class="sidebar">
+        
+
+        <p class='location'><a href='index.html'>knob</a></p><div class='block struct'><h2>Structs</h2><a class='struct current' href='struct.Settings.html'>Settings</a><br/></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'>Struct <a href='index.html'>knob</a>::<a class='struct' href=''>Settings</a><a class='source' href='../src/knob/src/knob/lib.rs.html#178-181'>[src]</a></h1>
+<pre class='rust struct'>pub struct Settings {
+    // some fields omitted
+}</pre><div class='docblock'><p>The settings structure we save the options and settings in.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../knob/struct.Settings.html' title='knob::Settings'>Settings</a></code></h3><div class='methods'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../knob/struct.Settings.html' title='knob::Settings'>Settings</a></code></h4>
+<div class='docblock'><p>Create a new Settings struct.</p>
+</div><h4 id='method.set' class='method'><code>fn <a href='#method.set' class='fnname'>set</a>&lt;A: <a class='trait' href='http://static.rust-lang.org/doc/master/std/to_str/trait.ToStr.html' title='std::to_str::ToStr'>ToStr</a>, T: <a class='trait' href='http://static.rust-lang.org/doc/master/std/to_str/trait.ToStr.html' title='std::to_str::ToStr'>ToStr</a>&gt;(&amp;mut self, setting: A, value: T)</code></h4>
+<div class='docblock'><p>Set a settings key to a value. The value will be serialized.</p>
+</div><h4 id='method.set_opt' class='method'><code>fn <a href='#method.set_opt' class='fnname'>set_opt</a>&lt;A: <a class='trait' href='http://static.rust-lang.org/doc/master/std/to_str/trait.ToStr.html' title='std::to_str::ToStr'>ToStr</a>, T: <a class='trait' href='http://static.rust-lang.org/doc/master/std/to_str/trait.ToStr.html' title='std::to_str::ToStr'>ToStr</a>&gt;(&amp;mut self, setting: A, value: <a class='enum' href='http://static.rust-lang.org/doc/master/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;T&gt;)</code></h4>
+<div class='docblock'><p>Set a value using an Option struct. The value will only be set if the
+value is not None. This way, you can avoid unwrapping the result of a
+previous operation by yourself.</p>
+</div><h4 id='method.fetch' class='method'><code>fn <a href='#method.fetch' class='fnname'>fetch</a>&lt;A: <a class='trait' href='http://static.rust-lang.org/doc/master/std/to_str/trait.ToStr.html' title='std::to_str::ToStr'>ToStr</a>, T: <a class='trait' href='http://static.rust-lang.org/doc/master/std/from_str/trait.FromStr.html' title='std::from_str::FromStr'>FromStr</a>&gt;(&amp;self, setting: A) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;T&gt;</code></h4>
+<div class='docblock'><p>Fetch a setting for a key. Fails if the setting is present but could not be
+parsed.</p>
+</div><h4 id='method.fetch_with' class='method'><code>fn <a href='#method.fetch_with' class='fnname'>fetch_with</a>&lt;A: <a class='trait' href='http://static.rust-lang.org/doc/master/std/to_str/trait.ToStr.html' title='std::to_str::ToStr'>ToStr</a>, T: <a class='trait' href='http://static.rust-lang.org/doc/master/std/from_str/trait.FromStr.html' title='std::from_str::FromStr'>FromStr</a>&gt;(&amp;self, setting: A, f: |<a class='enum' href='http://static.rust-lang.org/doc/master/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;T&gt;| -&gt; T) -&gt; T</code></h4>
+<div class='docblock'><p>Fetch a setting for a key and pass it to the given function. The result of the function
+will be returned.</p>
+</div><h4 id='method.opt' class='method'><code>fn <a href='#method.opt' class='fnname'>opt</a>(&amp;mut self, opt: <a class='struct' href='http://static.rust-lang.org/doc/master/getopts/struct.OptGroup.html' title='getopts::OptGroup'>OptGroup</a>)</code></h4>
+<div class='docblock'><p>Register a commandline for later use with load_args.</p>
+
+<p>Currently, only optopt and reqopt are properly supported.</p>
+</div><h4 id='method.load_os_args' class='method'><code>fn <a href='#method.load_os_args' class='fnname'>load_os_args</a>(&amp;mut self) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='http://static.rust-lang.org/doc/master/getopts/enum.Fail_.html' title='getopts::Fail_'>Fail_</a>&gt;</code></h4>
+<div class='docblock'><p>Load the command line argument given by the OS.</p>
+
+<p>Optionally returns failures.</p>
+</div><h4 id='method.load_args' class='method'><code>fn <a href='#method.load_args' class='fnname'>load_args</a>(&amp;mut self, args: <a class='struct' href='http://static.rust-lang.org/doc/master/std/vec/struct.Vec.html' title='std::vec::Vec'>Vec</a>&lt;~str&gt;) -&gt; <a class='enum' href='http://static.rust-lang.org/doc/master/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='http://static.rust-lang.org/doc/master/getopts/enum.Fail_.html' title='getopts::Fail_'>Fail_</a>&gt;</code></h4>
+<div class='docblock'><p>Load a list of command line arguments.</p>
+
+<p>Automatically sets &quot;knob.progname&quot; to the name of the program.</p>
+
+<p>Optionally returns failures.</p>
+</div><h4 id='method.usage' class='method'><code>fn <a href='#method.usage' class='fnname'>usage</a>(&amp;self, brief: &amp;str) -&gt; ~str</code></h4>
+<div class='docblock'><p>Returns the usage string for the stored OptGroups. Pass <code>brief</code>
+to have a brief message included before the usage strings.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='http://static.rust-lang.org/doc/master/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../knob/struct.Settings.html' title='knob::Settings'>Settings</a></code></h3><div class='methods'><h4 id='method.clone' class='method'><code>fn <a href='#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../knob/struct.Settings.html' title='knob::Settings'>Settings</a></code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&uarr;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&darr;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    <script>
+        var rootPath = "../";
+        var currentCrate = "knob";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script async src="../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The knob library documentation.">
+
+    <title>knob - Rust</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
+          rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+</head>
+<body>
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    <section class="sidebar">
+        
+
+        <p class='location'></p>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Search documentation..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'>Crate <a class='mod' href=''>knob</a><a class='source' href='../src/knob/src/knob/lib.rs.html#1-268'>[src]</a></h1>
+<div class='docblock'><p>A convenient structure to store and load settings.</p>
+
+<p>It is meant for items that are rarely read and stored, like command line flags or
+application configuration.</p>
+
+<p><code>knob::Settings</code> expects all values to implement <code>Show</code> + <code>FromStr</code> and stores them as
+strings internally. This allows sideloading of settings through multiple means, e.g.
+the command line or a simple config file. knob is not meant for structured data. If
+you want to load such data, store the location of the data as a Knob setting and do
+the loading yourself.</p>
+
+<p><code>knob</code> is typesafe in a sense that it will return the expected type you wanted if possible and
+fails otherwise.</p>
+
+<p><code>knob</code> allows you to decorate the <code>Settings</code> structure yourself for convenience (see examples).</p>
+
+<h1 id="storing-and-fetching-values" class='section-header'><a
+                           href="#storing-and-fetching-values">Storing and fetching values</a></h1>
+<p>The following example shows you how to store an IP address in <code>knob</code>:</p>
+<pre class='rust '>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>knob</span>;
+
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::<span class='ident'>IpAddr</span>;
+<span class='kw'>use</span> <span class='ident'>knob</span>::<span class='ident'>Settings</span>;
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+  <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>settings</span> <span class='op'>=</span> <span class='ident'>Settings</span>::<span class='ident'>new</span>();
+  <span class='ident'>settings</span>.<span class='ident'>set</span>(<span class='string'>&quot;ip&quot;</span>, <span class='string'>&quot;0.0.0.0&quot;</span>);
+  <span class='kw'>let</span> <span class='ident'>socket</span>: <span class='ident'>IpAddr</span> <span class='op'>=</span> <span class='ident'>settings</span>.<span class='ident'>fetch</span>(<span class='string'>&quot;ip&quot;</span>).<span class='ident'>unwrap</span>();
+  <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>socket</span>.<span class='ident'>to_str</span>(), <span class='string'>&quot;0.0.0.0&quot;</span>.<span class='ident'>to_owned</span>());
+}
+</pre>
+
+<p>This works the same for IPv6 addresses:</p>
+<pre class='rust '>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>knob</span>;
+
+<span class='kw'>use</span> <span class='ident'>knob</span>::<span class='ident'>Settings</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::<span class='ident'>IpAddr</span>;
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+  <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>settings</span> <span class='op'>=</span> <span class='ident'>Settings</span>::<span class='ident'>new</span>();
+  <span class='ident'>settings</span>.<span class='ident'>set</span>(<span class='string'>&quot;ip&quot;</span>, <span class='string'>&quot;::0.0.0.1&quot;</span>);
+  <span class='kw'>let</span> <span class='ident'>socket</span>: <span class='ident'>IpAddr</span> <span class='op'>=</span> <span class='ident'>settings</span>.<span class='ident'>fetch</span>(<span class='string'>&quot;ip&quot;</span>).<span class='ident'>unwrap</span>();
+  <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>socket</span>.<span class='ident'>to_str</span>(), <span class='string'>&quot;::0.0.0.1&quot;</span>.<span class='ident'>to_owned</span>());
+}
+</pre>
+
+<h1 id="providing-your-own-keys" class='section-header'><a
+                           href="#providing-your-own-keys">Providing your own keys</a></h1>
+<p>You can use enums as keys, as long as they implement <code>Show</code>:</p>
+<pre class='rust '>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>knob</span>;
+
+<span class='kw'>use</span> <span class='ident'>knob</span>::<span class='ident'>Settings</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::<span class='ident'>IpAddr</span>;
+
+<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+<span class='kw'>enum</span> <span class='ident'>Keys</span> {
+  <span class='ident'>Port</span>,
+  <span class='ident'>Ip</span>,
+  <span class='ident'>Addr</span>,
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+  <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>settings</span> <span class='op'>=</span> <span class='ident'>Settings</span>::<span class='ident'>new</span>();
+  <span class='ident'>settings</span>.<span class='ident'>set</span>(<span class='ident'>Ip</span>, <span class='string'>&quot;::0.0.0.1&quot;</span>);
+  <span class='kw'>let</span> <span class='ident'>socket</span>: <span class='ident'>IpAddr</span> <span class='op'>=</span> <span class='ident'>settings</span>.<span class='ident'>fetch</span>(<span class='ident'>Ip</span>).<span class='ident'>unwrap</span>();
+  <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>socket</span>.<span class='ident'>to_str</span>(), <span class='string'>&quot;::0.0.0.1&quot;</span>.<span class='ident'>to_owned</span>());
+}
+</pre>
+
+<h1 id="registering-command-line-options" class='section-header'><a
+                           href="#registering-command-line-options">Registering command line options</a></h1>
+<p><code>knob</code> allows you to register command line options to read from the command line later.</p>
+
+<p>The options are <code>getopts</code> option groups.</p>
+
+<p>If the loading of the command line args fails, an error will be returned.</p>
+<pre class='rust '>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>getopts</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>knob</span>;
+
+<span class='kw'>use</span> <span class='ident'>getopts</span>::<span class='ident'>optopt</span>;
+<span class='kw'>use</span> <span class='ident'>knob</span>::<span class='ident'>Settings</span>;
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+  <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>settings</span> <span class='op'>=</span> <span class='ident'>Settings</span>::<span class='ident'>new</span>();
+  <span class='ident'>settings</span>.<span class='ident'>opt</span>(<span class='ident'>optopt</span>(<span class='string'>&quot;p&quot;</span>, <span class='string'>&quot;port&quot;</span>, <span class='string'>&quot;the port to bind to&quot;</span>, <span class='string'>&quot;4000&quot;</span>));
+  <span class='ident'>settings</span>.<span class='ident'>opt</span>(<span class='ident'>optopt</span>(<span class='string'>&quot;e&quot;</span>, <span class='string'>&quot;environment&quot;</span>, <span class='string'>&quot;the environment to run in&quot;</span>, <span class='string'>&quot;&quot;</span>));
+  <span class='kw'>let</span> <span class='ident'>errors</span> <span class='op'>=</span> <span class='ident'>settings</span>.<span class='ident'>load_os_args</span>();
+  <span class='kw'>if</span> <span class='ident'>errors</span>.<span class='ident'>is_some</span>() {
+    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>settings</span>.<span class='ident'>usage</span>(<span class='string'>&quot;Try one of these:&quot;</span>));
+  }
+}
+</pre>
+
+<h1 id="decorating-the-settings-struct" class='section-header'><a
+                           href="#decorating-the-settings-struct">Decorating the settings struct</a></h1>
+<p>To make matters more convenient, you can implement a decorator
+to implement your own loading behaviour.</p>
+<pre class='rust '>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>knob</span>;
+
+<span class='kw'>use</span> <span class='ident'>knob</span>::<span class='ident'>Settings</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>net</span>::<span class='ident'>ip</span>::{<span class='ident'>IpAddr</span>,<span class='ident'>Ipv4Addr</span>,<span class='ident'>SocketAddr</span>};
+
+<span class='attribute'>#[<span class='ident'>deriving</span>(<span class='ident'>Show</span>)]</span>
+<span class='kw'>enum</span> <span class='ident'>Keys</span> {
+  <span class='ident'>Port</span>,
+  <span class='ident'>Ip</span>,
+  <span class='ident'>Addr</span>,
+}
+
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>SocketSettings</span> {
+  <span class='kw'>fn</span> <span class='ident'>socket</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>SocketAddr</span>;
+  <span class='kw'>fn</span> <span class='ident'>port</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u16</span>;
+  <span class='kw'>fn</span> <span class='ident'>ip</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>IpAddr</span>;
+}
+
+<span class='kw'>impl</span> <span class='ident'>SocketSettings</span> <span class='kw'>for</span> <span class='ident'>Settings</span> {
+  <span class='kw'>fn</span> <span class='ident'>socket</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>SocketAddr</span> {
+    <span class='self'>self</span>.<span class='ident'>fetch_with</span>(<span class='ident'>Addr</span>, <span class='op'>|</span><span class='ident'>addr</span><span class='op'>|</span> {
+      <span class='kw'>match</span> <span class='ident'>addr</span> {
+        <span class='prelude-val'>Some</span>(<span class='ident'>socket_addr</span>) <span class='op'>=&gt;</span> { <span class='ident'>socket_addr</span> },
+        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
+          <span class='kw'>let</span> <span class='ident'>port</span>: <span class='ident'>u16</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>port</span>();
+          <span class='kw'>let</span> <span class='ident'>ip</span>: <span class='ident'>IpAddr</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>ip</span>();
+          <span class='ident'>SocketAddr</span> { <span class='ident'>ip</span>: <span class='ident'>ip</span>, <span class='ident'>port</span>: <span class='ident'>port</span> }
+        }
+      }
+    })
+  }
+
+  <span class='kw'>fn</span> <span class='ident'>port</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u16</span> {
+    <span class='self'>self</span>.<span class='ident'>fetch</span>(<span class='ident'>Port</span>).<span class='ident'>unwrap_or</span>(<span class='number'>8080</span>)
+  }
+
+  <span class='kw'>fn</span> <span class='ident'>ip</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>IpAddr</span> {
+    <span class='self'>self</span>.<span class='ident'>fetch</span>(<span class='ident'>Ip</span>).<span class='ident'>unwrap_or</span>(<span class='ident'>Ipv4Addr</span>(<span class='number'>127</span>,<span class='number'>0</span>,<span class='number'>0</span>,<span class='number'>1</span>))
+  }
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+  <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>settings</span> <span class='op'>=</span> <span class='ident'>Settings</span>::<span class='ident'>new</span>();
+  <span class='ident'>settings</span>.<span class='ident'>set</span>(<span class='ident'>Ip</span>, <span class='string'>&quot;::0.0.0.1&quot;</span>);
+  <span class='kw'>let</span> <span class='ident'>socket</span>: <span class='ident'>IpAddr</span> <span class='op'>=</span> <span class='ident'>settings</span>.<span class='ident'>ip</span>();
+  <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>socket</span>.<span class='ident'>to_str</span>(), <span class='string'>&quot;::0.0.0.1&quot;</span>.<span class='ident'>to_owned</span>());
+}
+</pre>
+
+<p>knob goes up to 11.</p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                    <tr>
+                        <td><a class='struct' href='struct.Settings.html'
+                               title='knob::Settings'>Settings</a></td>
+                        <td class='docblock short'><p>The settings structure we save the options and settings in.</p>
+</td>
+                    </tr>
+                </table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&uarr;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&darr;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code> (or <code>str</code>), <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    <script>
+        var rootPath = "../";
+        var currentCrate = "knob";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script async src="../search-index.js"></script>
+</body>
+</html>
