@@ -42,7 +42,7 @@ fn main() {
 }
 ```
 
-For more elaborate examples, see [the API documentation](http://skade.github.io/knob/doc/knob/index.html).
+For more elaborate examples, see [the API documentation](knob/index.html).
 
 ## Version policy
 

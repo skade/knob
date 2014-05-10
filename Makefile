@@ -38,3 +38,4 @@ docs: checkdocs
 	## Generate API documentation
 	$(RUSTDOC) -o doc/ src/knob/lib.rs
 	$(RUSTDOC) -o doc/ README.md
+	$(RUSTDOC) -o doc/ CHANGES.md
