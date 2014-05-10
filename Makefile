@@ -39,3 +39,4 @@ docs: checkdocs
 	$(RUSTDOC) -o doc/ src/knob/lib.rs
 	$(RUSTDOC) -o doc/ README.md
 	$(RUSTDOC) -o doc/ CHANGES.md
+	$(RUSTDOC) -o doc/ doc/index.md
