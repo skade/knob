@@ -42,6 +42,15 @@ fn main() {
 
 For more elaborate examples, see [the API documentation](http://skade.github.io/knob/doc/knob/index.html).
 
+## Version policy
+
+This library follows [semver](http://semver.org), with a notable, but temporary
+exception, as Rust is currently still in flux:
+
+Changes to maintain compatibility with the current development state of Rust are
+considered patches, as long as the resulting API stays faithful to the previous
+API and doesn't add or loose any features.
+
 ## License
 
 MIT, see `LICENSE.md`
