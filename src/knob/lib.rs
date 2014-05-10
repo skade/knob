@@ -192,10 +192,10 @@ impl Settings {
   }
 
   /// Set a value using an Option struct. The value will only be set if the
-  /// Some value is given. This way, you can avoid unwrapping the result of a
+  /// value is not None. This way, you can avoid unwrapping the result of a
   /// previous operation by yourself.
   pub fn set_opt<A: ToStr, T: ToStr>(&mut self, setting: A, value: Option<T>) {
-    if !value.is_none() {
+    if value.is_some() {
       self.store.swap(setting.to_str(), value.unwrap().to_str());
     }
   }
