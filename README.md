@@ -44,6 +44,19 @@ fn main() {
 
 For more elaborate examples, see [the API documentation](knob/index.html).
 
+To try out the examples, you first have to create the crate for this library:
+
+```shell
+make libknob
+```
+
+Then you can build the examples as follows:
+
+```shell
+rustc -L build examples/socket_settings.rs
+rustc -L build examples/commandline_options.rs
+```
+
 ## Version policy
 
 This library follows [semver](http://semver.org), with a notable, but temporary
