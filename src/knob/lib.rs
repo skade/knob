@@ -95,7 +95,7 @@
 //!   settings.opt(optopt("e", "environment", "the environment to run in", ""));
 //!   let errors = settings.load_os_args();
 //!   if errors.is_some() {
-//!     println!("{}", settings.usage("Try one of these:"));
+//!     println!("{}", settings.usage(from_str("Try one of these:").unwrap()));
 //!   }
 //! }
 //! ~~~
@@ -174,9 +174,8 @@ use getopts::{usage,getopts,OptGroup};
 use getopts::Fail_;
 
 /// The settings structure we save the options and settings in.
-#[deriving(Clone)]
 pub struct Settings {
-  store: HashMap<~str,~str>,
+  store: HashMap<String,String>,
   options: Box<Vec<OptGroup>>,
 }
 
@@ -205,9 +204,9 @@ impl Settings {
   pub fn fetch<A: ToStr, T: FromStr>(&self, setting: A) -> Option<T> {
     match self.store.find(&setting.to_str()) {
       Some(string) => {
-        let value = from_str(string.to_owned());
+        let value = from_str(string.as_slice());
         if value.is_none() {
-          fail!("setting could not be parsed:" + setting.to_str())
+          fail!("setting could not be parsed: {:?}", setting.to_str())
         }
         value
       },
@@ -233,8 +232,7 @@ impl Settings {
   ///
   /// Optionally returns failures.
   pub fn load_os_args(&mut self) -> Option<Fail_> {
-    let args = os::args();
-    self.load_args(args)
+    self.load_args(os::args())
   }
 
   /// Load a list of command line arguments.
@@ -242,7 +240,7 @@ impl Settings {
   /// Automatically sets "knob.progname" to the name of the program.
   ///
   /// Optionally returns failures.
-  pub fn load_args(&mut self, args: Vec<~str>) -> Option<Fail_> {
+  pub fn load_args(&mut self, args: Vec<String>) -> Option<Fail_> {
     let ref prog_name = args.get(0);
 
     self.set("knob.progname", prog_name.clone());
@@ -262,8 +260,8 @@ impl Settings {
 
   /// Returns the usage string for the stored OptGroups. Pass `brief`
   /// to have a brief message included before the usage strings.
-  pub fn usage(&self, brief: &str) -> ~str {
-    usage(brief, self.options.as_slice())
+  pub fn usage(&self, brief: String) -> String {
+    usage(brief.as_slice(), self.options.as_slice())
   }
 }
 

@@ -1,5 +1,9 @@
 % CHANGELOG
 
+## 1.1.2 -> 1.1.3
+
+* compatiblity: Compatibility with Rust > 6fad19e (skade)
+
 ## 1.1.1 -> 1.1.2
 
 * compatiblity: Compatibility with Rust > 5b4774d (skade)

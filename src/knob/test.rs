@@ -136,10 +136,10 @@ mod tests {
   fn test_usage() {
     let mut settings = Settings::new();
     settings.opt(reqopt("p", "port", "The port to bind to", "eg: 4000"));
-    let usage = settings.usage("this is how it works");
+    let usage = settings.usage(from_str("this is how it works").unwrap());
 
-    assert!(usage.contains("this is how it works"))
-    assert!(usage.contains("--port"))
+    assert!(usage.as_slice().contains("this is how it works"))
+    assert!(usage.as_slice().contains("--port"))
   }
 
   #[test]
