@@ -46,13 +46,13 @@ For more elaborate examples, see [the API documentation](knob/index.html).
 
 To try out the examples, you first have to create the crate for this library:
 
-```shell
+```notrust
 make libknob
 ```
 
 Then you can build the examples as follows:
 
-```shell
+```notrust
 rustc -L build examples/socket_settings.rs
 rustc -L build examples/commandline_options.rs
 ```

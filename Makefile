@@ -5,7 +5,7 @@ RUSTFLAGS ?= -O --out-dir build -L build
 
 .SILENT:
 
-all: libknob test
+all: libknob test examples
 	## Build library and run tests
 
 libknob: builddir
@@ -29,6 +29,10 @@ clean:
 	git clean -df
 	rm -fr build/ doc/
 
+examples: libknob
+	$(RUSTC) -L build --out-dir examples/ examples/commandline_options.rs
+	$(RUSTC) -L build --out-dir examples/ examples/socket_settings.rs
+	
 checkdocs: libknob
 	# Check documentation
 	$(RUSTDOC) --test -L build README.md
