@@ -74,7 +74,7 @@ mod tests {
     settings.set(Port, "12345");
     settings.set(Ip, "127.0.0.1");
     let socket = settings.socket();
-    assert_eq!(socket.to_str(), "127.0.0.1:12345".to_owned())
+    assert_eq!(socket.to_str(), "127.0.0.1:12345".to_string())
   }
 
   #[test]
@@ -82,7 +82,7 @@ mod tests {
     let mut settings = Settings::new();
     settings.set(Ip, "::0.0.0.1");
     let ip = settings.ip();
-    assert_eq!(ip.to_str(), "::0.0.0.1".to_owned())
+    assert_eq!(ip.to_str(), "::0.0.0.1".to_string())
   }
 
   #[test]
@@ -92,7 +92,7 @@ mod tests {
     settings.set(Ip, "127.0.0.1");
     settings.set(Addr, "0.0.0.0:4567");
     let socket = settings.socket();
-    assert_eq!(socket.to_str(), "0.0.0.0:4567".to_owned())
+    assert_eq!(socket.to_str(), "0.0.0.0:4567".to_string())
   }
 
   #[test]
@@ -100,7 +100,7 @@ mod tests {
     let mut settings = Settings::new();
     settings.opt(optopt("p", "port", "The port to bind to", "eg: 4000"));
 
-    let args = vec!("myprog".to_owned(), "-p".to_owned(), "3000".to_owned());
+    let args = vec!("myprog".to_string(), "-p".to_string(), "3000".to_string());
     let error = settings.load_args(args);
 
     assert!(error.is_none());
@@ -112,7 +112,7 @@ mod tests {
     let mut settings = Settings::new();
     settings.opt(reqopt("p", "port", "The port to bind to", "eg: 4000"));
 
-    let args = vec!("myprog".to_owned(), "-p".to_owned(), "3000".to_owned());
+    let args = vec!("myprog".to_string(), "-p".to_string(), "3000".to_string());
     let error = settings.load_args(args);
 
     assert!(error.is_none());
@@ -124,7 +124,7 @@ mod tests {
     let mut settings = Settings::new();
     settings.opt(reqopt("p", "port", "The port to bind to", "eg: 4000"));
 
-    let args = vec!("myprog".to_owned());
+    let args = vec!("myprog".to_string());
     let error = settings.load_args(args);
 
     assert!(error.is_some());

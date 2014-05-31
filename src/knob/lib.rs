@@ -29,7 +29,7 @@
 //!   let mut settings = Settings::new();
 //!   settings.set("ip", "0.0.0.0");
 //!   let socket: IpAddr = settings.fetch("ip").unwrap();
-//!   assert_eq!(socket.to_str(), "0.0.0.0".to_owned());
+//!   assert_eq!(socket.to_str(), "0.0.0.0".to_string());
 //! }
 //! ~~~
 //!
@@ -45,7 +45,7 @@
 //!   let mut settings = Settings::new();
 //!   settings.set("ip", "::0.0.0.1");
 //!   let socket: IpAddr = settings.fetch("ip").unwrap();
-//!   assert_eq!(socket.to_str(), "::0.0.0.1".to_owned());
+//!   assert_eq!(socket.to_str(), "::0.0.0.1".to_string());
 //! }
 //! ~~~
 //!
@@ -70,7 +70,7 @@
 //!   let mut settings = Settings::new();
 //!   settings.set(Ip, "::0.0.0.1");
 //!   let socket: IpAddr = settings.fetch(Ip).unwrap();
-//!   assert_eq!(socket.to_str(), "::0.0.0.1".to_owned());
+//!   assert_eq!(socket.to_str(), "::0.0.0.1".to_string());
 //! }
 //! ~~~
 //!
@@ -151,7 +151,7 @@
 //!   let mut settings = Settings::new();
 //!   settings.set(Ip, "::0.0.0.1");
 //!   let socket: IpAddr = settings.ip();
-//!   assert_eq!(socket.to_str(), "::0.0.0.1".to_owned());
+//!   assert_eq!(socket.to_str(), "::0.0.0.1".to_string());
 //! }
 //! ~~~
 //!
@@ -164,6 +164,7 @@
 
 extern crate getopts;
 extern crate collections;
+extern crate debug;
 
 use collections::hashmap::HashMap;
 use std::os;
