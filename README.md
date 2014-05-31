@@ -69,9 +69,11 @@ API and doesn't add or loose any features.
 ## Contributors
 
 Original Author: [Florian Gilcher <florian.gilcher@asquera.de>](http://github.com/skade)
+
 With patches by:
 * [eliovir](http://github.com/eliovir)
 * [m-r-r](http://github.com/m-r-r)
+* [moonglum](http://github.com/moonglum)
 
 ## License
 

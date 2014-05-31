@@ -1,5 +1,11 @@
 % CHANGELOG
 
+## 1.1.3 -> 1.1.4
+
+* docs: provide dedicated examples (moonglum)
+* docs: test the documentation (moonglum)
+* compatiblity: Compatibility with Rust > 0839e94 (skade)
+
 ## 1.1.2 -> 1.1.3
 
 * compatiblity: Compatibility with Rust > 6fad19e (skade)
