@@ -19,7 +19,7 @@
 //!
 //! The following example shows you how to store an IP address in `knob`:
 //!
-//! ~~~{.rust}
+//! ~~~
 //! extern crate knob;
 //!
 //! use std::io::net::ip::IpAddr;
@@ -35,7 +35,7 @@
 //!
 //! This works the same for IPv6 addresses:
 //!
-//! ~~~{.rust}
+//! ~~~
 //! extern crate knob;
 //!
 //! use knob::Settings;
@@ -53,7 +53,7 @@
 //!
 //! You can use enums as keys, as long as they implement `Show`:
 //!
-//! ~~~{.rust}
+//! ~~~
 //! extern crate knob;
 //!
 //! use knob::Settings;
@@ -82,7 +82,7 @@
 //!
 //! If the loading of the command line args fails, an error will be returned.
 //!
-//! ~~~{.rust}
+//! ~~~
 //! extern crate getopts;
 //! extern crate knob;
 //!
@@ -105,7 +105,7 @@
 //! To make matters more convenient, you can implement a decorator
 //! to implement your own loading behaviour.
 //!
-//! ~~~{.rust}
+//! ~~~
 //! extern crate knob;
 //!
 //! use knob::Settings;
