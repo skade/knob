@@ -163,10 +163,9 @@
 #![license = "MIT"]
 
 extern crate getopts;
-extern crate collections;
 extern crate debug;
 
-use collections::hashmap::HashMap;
+use std::collections::HashMap;
 use std::os;
 use std::from_str::FromStr;
 use std::to_str::ToStr;
