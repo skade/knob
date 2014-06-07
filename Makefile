@@ -19,10 +19,9 @@ builddir:
 libknob-test: libknob
 	# --
 	$(RUSTTEST) $(RUSTFLAGS) src/knob/test.rs
+	./build/test
 
 test: libknob-test checkdocs
-	## Run tests
-	./build/test
 
 clean:
 	## Remove library, test files, documentation
@@ -35,8 +34,8 @@ examples: libknob
 	
 checkdocs: libknob
 	# Check documentation
-	$(RUSTDOC) --test -L build README.md
 	$(RUSTDOC) --test -L build src/knob/lib.rs
+	$(RUSTDOC) --test -L build README.md
 
 docs: checkdocs
 	## Generate API documentation
